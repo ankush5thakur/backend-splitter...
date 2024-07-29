@@ -45,10 +45,31 @@ app.post("/friends", async (req, res) => {
   console.log(req.body);
   try {
     const newFriend = await Friend.create(req.body);
-    // await newFriend.save();
     res.status(201).json(newFriend);
   } catch (error) {
     console.log(error);
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// New route for updating a friend's balance
+app.put("/friends/:id", async (req, res) => {
+  const { id } = req.params;
+  const { balance } = req.body;
+  console.log(id);
+
+  try {
+    const friend = await Friend.findById(id);
+
+    if (!friend) {
+      return res.status(404).json({ message: "Friend not found" });
+    }
+
+    friend.balance = balance;
+    await friend.save();
+
+    res.json(friend);
+  } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
