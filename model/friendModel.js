@@ -7,6 +7,7 @@ const FriendSchema = new Schema({
   image: { type: String },
   balance: { type: Number },
 });
+// FriendSchema.index("id")
 
 let Friend = mongoose.model("Friend", FriendSchema);
 

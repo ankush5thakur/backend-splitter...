@@ -35,6 +35,7 @@ let parsedData = JSON.parse(data);
 app.get("/friends", async (req, res) => {
   try {
     const friends = await Friend.find();
+    console.log(friends);
     res.json(friends);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -59,7 +60,7 @@ app.put("/friends/:id", async (req, res) => {
   console.log(id);
 
   try {
-    const friend = await Friend.findById(id);
+    const friend = await Friend.findOne({ id: id });
 
     if (!friend) {
       return res.status(404).json({ message: "Friend not found" });
